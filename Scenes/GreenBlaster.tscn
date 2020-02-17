@@ -3,8 +3,6 @@
 [ext_resource path="res://Assests/EnemyLazerGreen.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/RedBlaster.gd" type="Script" id=2]
 
-
-
 [node name="RedBlaster" type="RigidBody2D"]
 collision_layer = 4
 collision_mask = 6

@@ -39,7 +39,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("fire"):
 		var b = PLazer.instance()
 		b.position = position
-		b.position.y -= 25
+		b.position.y -= 20
 		get_node("/root/Game/PlayerLazer").add_child(b)
 	if Input.is_action_pressed("left"):
 		position.x = position.x - 10

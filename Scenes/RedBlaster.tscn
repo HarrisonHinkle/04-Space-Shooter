@@ -4,6 +4,8 @@
 [ext_resource path="res://Scripts/RedBlaster.gd" type="Script" id=2]
 
 [node name="RedBlaster" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 24
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
