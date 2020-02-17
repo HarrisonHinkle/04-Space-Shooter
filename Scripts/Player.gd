@@ -6,7 +6,7 @@ export var margin = 25
 export var y_range = 600
 export var acceleration = 0.1
 export var lives = 3 
-
+export var ship ="GREEN"
 var velocity = Vector2(0,0)
 
 onready var VP = get_viewport_rect().size
@@ -22,7 +22,6 @@ func _ready():
 
 func change_health(h):
 	health += h
-	emit_signal("health_changed")
 	if health <= 0:
 		die()
 
@@ -32,15 +31,16 @@ func change_score(s):
 
 func die():
 	lives = lives - 1 
+	emit_signal("lives_changed")
 	if lives == 0:
-		pass
+		queue_free()
 
 func _physics_process(delta):
 	if Input.is_action_pressed("fire"):
 		var b = PLazer.instance()
 		b.position = position
 		b.position.y -= 25
-		get_node("/root/Game/PlayerLazer").fire(b)
+		get_node("/root/Game/PlayerLazer").add_child(b)
 	if Input.is_action_pressed("left"):
 		position.x = position.x - 10
 	if Input.is_action_pressed("right"):
@@ -68,6 +68,26 @@ func _physics_process(delta):
 	
 func _process(delta):
 	if Input.is_action_pressed("switch"):
-		$AnimatedSprite.play("transform")
-	else:
-		$AnimatedSprite.stop()
+		if ship == "GREEN":
+			$CGREEN.play("transform")
+		if ship == "RED":
+			$CRED.play("transform")
+		
+
+
+func _on_Timer_timeout():
+	pass # Replace with function body.
+
+
+func _on_CRED_animation_finished():
+	$CGREEN.show()
+	$CRED.stop()
+	ship = "GREEN"
+	set_collision_mask_bit(1,1)
+
+func _on_CGREEN_animation_finished():
+	$CGREEN.hide()
+	$CGREEN.stop()
+	ship = "RED"
+	set_collision_mask_bit(12,13)
+ 
