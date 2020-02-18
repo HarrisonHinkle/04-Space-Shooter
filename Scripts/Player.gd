@@ -5,7 +5,7 @@ export var score = 0
 export var margin = 25
 export var y_range = 600
 export var acceleration = 0.1
-export var lives = 3 
+export var lives = 5
 export var ship ="GREEN"
 var velocity = Vector2(0,0)
 
@@ -33,14 +33,14 @@ func die():
 	lives = lives - 1 
 	emit_signal("lives_changed")
 	if lives == 0:
-		queue_free()
+		get_tree().change_scene("res://Scenes/Game Over.tscn")
 
 func _physics_process(delta):
 	if Input.is_action_pressed("fire"):
 		var b = PLazer.instance()
 		b.position = position
 		b.position.y -= 20
-		get_node("/root/Game/PlayerLazer").add_child(b)
+		get_node("/root/Game/PlayerLazer").fire(b)
 	if Input.is_action_pressed("left"):
 		position.x = position.x - 10
 	if Input.is_action_pressed("right"):
@@ -83,11 +83,14 @@ func _on_CRED_animation_finished():
 	$CGREEN.show()
 	$CRED.stop()
 	ship = "GREEN"
-	set_collision_mask_bit(1,1)
+	set_collision_layer(8)
+	set_collision_mask(5)
+	
 
 func _on_CGREEN_animation_finished():
 	$CGREEN.hide()
 	$CGREEN.stop()
 	ship = "RED"
-	set_collision_mask_bit(12,13)
+	set_collision_layer(7)
+	set_collision_mask(2)
  

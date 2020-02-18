@@ -10,7 +10,7 @@ func fire(b):
 	if ready:
 		add_child(b)
 		ready = false
-		$Timer.start()
+		$PT.start()
 
 func _on_PT_timeout():
 	ready = true
